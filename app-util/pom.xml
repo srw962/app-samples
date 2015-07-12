@@ -4,7 +4,7 @@
   
   	<!-- 继承 -->
 	<parent>
-		<groupId>org.lanbo</groupId>
+		<groupId>com.asynclife</groupId>
 		<artifactId>app-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../app-parent/pom.xml</relativePath>
