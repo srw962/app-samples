@@ -13,7 +13,7 @@
 		<module>../app-util</module>
 		<module>../app-jbpm</module>
 	</modules>
-
+	
 	<!-- 配置项目发布到私服的哪个仓库中 -->
 	<distributionManagement>
 		<snapshotRepository>
@@ -409,6 +409,12 @@
 			<version>2.4.8</version>
 		</dependency>
 
+
+<dependency>
+	<groupId>org.jooq</groupId>
+	<artifactId>jooq</artifactId>
+	<version>3.6.0</version>
+</dependency>
 	</dependencies>
 		
 	</dependencyManagement>
