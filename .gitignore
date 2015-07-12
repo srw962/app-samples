@@ -1,0 +1,15 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# eclipse
+.classpath
+.project
+.settings
+.metadata/
+RemoteSystemsTempFiles/
+
+
+# maven:
+target
