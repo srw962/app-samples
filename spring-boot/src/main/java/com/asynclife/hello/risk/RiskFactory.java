@@ -18,17 +18,17 @@ public class RiskFactory {
 		List<Formular> f2 = new ArrayList<Formular>();
 		List<Formular> f3 = new ArrayList<Formular>();
 
-		f1.add(new Formular("002", "name", "name.length() @gteq 2"));
-		f1.add(new Formular("001", "age", "age @gteq 18"));
+		f1.add(new Formular("002", "name", "name.length() >= 2"));
+		f1.add(new Formular("001", "age", "age >= 18"));
 
-		f2.add(new Formular("004", "name", "name.length() @gteq 2"));
-		f2.add(new Formular("003", "age", "age @gteq 36"));
+		f2.add(new Formular("004", "name", "name.length() >= 2"));
+		f2.add(new Formular("003", "age", "age >= 36"));
 
-		f3.add(new Formular("009", "name", "name.length() @gteq 2"));
-		f3.add(new Formular("005", "cars", "cars @lteq 1"));
-		f3.add(new Formular("008", "age", "age @gteq 36"));
-		f3.add(new Formular("006", "debt", "debt @gteq 10000"));
-		f3.add(new Formular("007", "set", "sex @eq 0"));
+		f3.add(new Formular("009", "name", "name.length() >= 2"));
+		f3.add(new Formular("005", "cars", "cars <= 1"));
+		f3.add(new Formular("008", "age", "age >= 36"));
+		f3.add(new Formular("006", "debt", "debt >= 10000"));
+		f3.add(new Formular("007", "set", "sex == 0"));
 
 		Risk r1 = new Risk("A01", "损失", f1);
 		Risk r2 = new Risk("A02", "可疑", f2);

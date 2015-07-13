@@ -8,6 +8,8 @@ import com.asynclife.hello.risk.Customer;
 import com.asynclife.hello.risk.Risk;
 import com.asynclife.hello.risk.RiskFactory;
 import com.asynclife.hello.risk.RiskManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class TestDriver {
 	
@@ -22,6 +24,12 @@ public class TestDriver {
 		for(Risk risk : riskQueue) {
 			System.out.println(risk);
 		}
+		
+		Gson gson = new GsonBuilder()
+					.disableHtmlEscaping() // 关闭HtmlEscape功能
+					.create();
+		String json = gson.toJson(riskQueue);
+		System.out.println(json);
 		
 	}
 	
