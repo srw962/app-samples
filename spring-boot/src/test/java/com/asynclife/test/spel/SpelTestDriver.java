@@ -1,4 +1,4 @@
-package com.asynclife.spel;
+package com.asynclife.test.spel;
 
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -10,6 +10,8 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.expression.spel.support.StandardTypeLocator;
+
+import com.asynclife.spel.Inventor;
 
 public class SpelTestDriver {
 

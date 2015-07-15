@@ -15,14 +15,14 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.2.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<profiles>
 		<profile>
 			<id>fastinstall</id>
 			<properties>
-				 <maven.test.skip>true</maven.test.skip>
+				<maven.test.skip>true</maven.test.skip>
 			</properties>
 		</profile>
 	</profiles>
@@ -37,28 +37,164 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-				<dependency>
+
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-meta</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-codegen</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.36</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			
+			<!-- web service -->
+			<plugin>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<wsdlUrls>
+					</wsdlUrls>
+					<sourceDestDir>${basedir}/target/generated</sourceDestDir>
+					<bindingDirectory>
+						${basedir}/src/main/resources/binding
+					</bindingDirectory>
+				</configuration>
+			</plugin>
+			
+			<!-- JOOQ code generating -->
+			<plugin>
+				<!-- Specify the maven code generator plugin -->
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>3.6.1</version>
+
+				<!-- The plugin should hook into the generate goal -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<!-- Specify the plugin configuration. The configuration format is the 
+					same as for the standalone code generator -->
+				<!-- Configure the database connection here -->
+				<configuration>
+					<!-- JDBC connection parameters -->
+					<jdbc>
+						<driver>com.mysql.jdbc.Driver</driver>
+						<url>jdbc:mysql://localhost:3306/library</url>
+						<user>root</user>
+						<password>root123</password>
+					</jdbc>
+
+					<!-- Generator parameters -->
+					<generator>
+						<!-- The default code generator. You can override this one, to generate 
+							your own code style Defaults to org.jooq.util.DefaultGenerator -->
+						<name>org.jooq.util.DefaultGenerator</name>
+
+						<database>
+							<!-- The database type. The format here is:org.util.[database].[database]Database -->
+							<name>org.jooq.util.mysql.MySQLDatabase</name>
+							<!-- The database database name to be generated -->
+							<inputSchema>library</inputSchema>
+							<!-- All elements that are generated from your schema (A Java regular 
+								expression. Use the pipe to separate several expressions) Watch out for case-sensitivity. 
+								Depending on your database, this might be important! -->
+							<includes>.*</includes>
+							<!-- All elements that are excluded from your schema (A Java regular 
+								expression. Use the pipe to separate several expressions). Excludes match 
+								before includes -->
+							<excludes></excludes>
+						</database>
+						<target>
+							<!-- The destination package of your generated classes (within the 
+								destination directory) -->
+							<packageName>org.jooq.util.maven.example</packageName>
+							<!-- The destination directory of your generated classes -->
+							<directory>target/generated-sources/jooq</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
-	
+
 
 </project>
