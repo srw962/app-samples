@@ -112,6 +112,16 @@
 				</configuration>
 			</plugin>
 			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
+				<configuration>
+					<forkMode>once</forkMode> <!-- forkMode=once: 执行test-phrase时，新开JVM进程运行 -->
+ 					<argLine>-Dfile.encoding=UTF-8</argLine> 
+				</configuration>
+			</plugin>
+			
 			<!-- web service -->
 			<plugin>
 				<groupId>org.jvnet.jax-ws-commons</groupId>
