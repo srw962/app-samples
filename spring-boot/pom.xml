@@ -79,7 +79,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
+			
+			<!-- 生成jar包的时候附加上源码 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -94,6 +95,7 @@
 				</executions>
 			</plugin>
 			
+			<!-- 拷贝资源文件时，使用UTF-8编码 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -101,7 +103,8 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-		
+			
+			<!-- 编译器 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -112,6 +115,7 @@
 				</configuration>
 			</plugin>
 			
+			<!-- 单元测试 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
