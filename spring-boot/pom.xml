@@ -80,7 +80,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>
@@ -92,7 +92,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -185,14 +185,25 @@
 						<target>
 							<!-- The destination package of your generated classes (within the 
 								destination directory) -->
-							<packageName>org.jooq.util.maven.example</packageName>
+							<packageName>org.jooq.test.modle</packageName>
 							<!-- The destination directory of your generated classes -->
-							<directory>target/generated-sources/jooq</directory>
+							<directory>target/generated-sources/jooq-mysql</directory>
 						</target>
 					</generator>
 				</configuration>
 			</plugin>
 
+			<!-- jetty -->
+			<plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.26</version>
+                <configuration>
+                    <reload>manual</reload>
+                    <stopKey>stop</stopKey>
+                    <stopPort>9966</stopPort>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

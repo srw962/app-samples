@@ -1,7 +1,7 @@
-package com.asynclife.jooq;
+package com.asynclife.jooq.example;
 // For convenience, always static import your generated tables and
 // jOOQ functions to decrease verbosity:
-import static org.jooq.util.maven.example.tables.Author.*;
+import static org.jooq.test.modle.tables.Author.*;
 import static org.jooq.impl.DSL.*;
 
 import java.sql.*;
@@ -9,12 +9,12 @@ import java.sql.*;
 import org.jooq.*;
 import org.jooq.impl.*;
 
-public class Main {
+public class JooqSelectTest {
 
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void test(String[] args) {
         String userName = "root";
         String password = "root123";
         String url = "jdbc:mysql://localhost:3306/library";
