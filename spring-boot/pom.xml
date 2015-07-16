@@ -79,8 +79,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<!-- <plugin>
+			
+			<!-- 
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>
@@ -92,8 +93,10 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin> 
+			-->
 			
+			<!-- 拷贝资源文件时，使用UTF-8编码 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -101,7 +104,8 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-		
+			
+			<!-- 编译器 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -109,6 +113,17 @@
 					<source>1.7</source>
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			
+			<!-- 单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.2</version>
+				<configuration>
+					<forkMode>once</forkMode> <!-- forkMode=once: 执行test-phrase时，新开JVM进程运行 -->
+ 					<argLine>-Dfile.encoding=UTF-8</argLine> 
 				</configuration>
 			</plugin>
 			
