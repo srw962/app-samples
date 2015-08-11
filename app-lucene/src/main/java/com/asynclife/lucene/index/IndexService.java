@@ -43,6 +43,10 @@ public class IndexService {
 		return indexWriter;
 	}
 	
+	/**
+	 * 对指定目录下的文本进行索引
+	 * @param folder
+	 */
 	public void addIndex(File folder) {
 		try {
 			IndexWriter indexWriter = createIndexWriter();
@@ -57,6 +61,7 @@ public class IndexService {
 				doc.add(new Field("path", file.getAbsolutePath(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 				// 使用IndexWriter将Document添加到索引中
 				indexWriter.addDocument(doc);
+				indexWriter.commit(); //提交索引
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -86,9 +91,28 @@ public class IndexService {
 				doc.add(new Field("id", id, 
 						Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 				doc.add(new Field("content", content, 
-						Field.Store.NO, Field.Index.ANALYZED));
+						Field.Store.YES, Field.Index.ANALYZED));
+				
+				// 为数字加索引
+				/*doc.add(new NumericField("db_id", Field.Store.YES, true)
+					.setIntValue(100));*/
+				
+				// 为日期加索引
+				/*doc.add(new NumericField("date", Field.Store.YES, true)
+					.setLongValue(new Date().getTime()));*/
+				
+				// 建立索引的时候设置权重---以email为例子
+				int index = content.indexOf("@");
+				if(index != -1) {
+					String suffix = content.substring(index+1);
+					doc.setBoost(Config.BOOST_MAP.get(suffix));
+				}
+				
 				indexWriter.addDocument(doc);
+				
+				indexWriter.commit();
 			}
+			indexWriter.commit();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

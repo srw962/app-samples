@@ -3,6 +3,7 @@ package com.asynclife.lucene.index;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -78,4 +79,23 @@ public class LuceneTest {
 		service.updateIndex(term, newDoc);
 		
 	}
+	
+	@Test
+	public void search() {
+		IndexService service = new IndexService();
+		
+		AtomicInteger ai = new AtomicInteger();
+		
+		Map<String,String> emails = new HashMap<String, String>();
+		emails.put(ai.incrementAndGet()+"", "a01@163.com");
+		emails.put(ai.incrementAndGet()+"", "a02@126.com");
+		emails.put(ai.incrementAndGet()+"", "a03@126.com");
+		emails.put(ai.incrementAndGet()+"", "a04@163.com");
+		service.addIndex(emails, true);
+		
+		Searcher searcher = new Searcher();
+		Term term = new Term("content", "com");
+		searcher.searchTerm(new File("target/index"), term);
+	}
+	
 }

@@ -16,4 +16,12 @@ Field.Index 索引选项
 	NOT_ANALYZED_NO_NORMS		进行索引，但不分词，也不存储norms信息
 	
 	
-	
+
+IndexReader 一般都设计为单利对象（打开和关系都比较耗费资源），reader一般不关闭
+IndexWriter	使用完成就关闭，注意commit
+
+
+RAMDirectory	速度快，索引全部存放在内存中
+FSDirectory		速度慢，索引保存在文件系统中
+
+
