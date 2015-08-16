@@ -246,13 +246,13 @@ public class IndexUtil {
 			Query query = parser.parse(searchValue);
 			
 			int MAX_RECORD = pageIndex * pageSize; // 限定每次最多查询多少条进行分页
-			TopDocs topDocs = searcher.search(query, MAX_RECORD); 
+			TopDocs topDocs = searcher.search(query, MAX_RECORD); //先查询至多x条记录，再过滤
 			ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 			
-			if(MAX_RECORD - scoreDocs.length > pageSize) {
-				return; // 预查询记录数超出有效总记录数1页时，退出
+			if(MAX_RECORD - scoreDocs.length >= pageSize) {
+				return; // 防止角标越界
 			}
-			System.out.println("共："+topDocs.totalHits+"条记录，当前第"+pageIndex+"页");
+			System.out.println("共："+topDocs.totalHits+"条记录，每页"+pageSize+"条，第"+pageIndex+"页");
 			
 			// 分页
 			int preDocNum = (pageIndex - 1) * pageSize - 1; // 上一次分页的最后1条记录的索引号
