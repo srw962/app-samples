@@ -3,7 +3,9 @@ package builder.mailsender;
 
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -21,13 +23,21 @@ public class MailSender {
 	
 	// SMTP服务器地址
 	private static final String SMPT_HOST = "";
+	protected static final String USERNAME = null;
+	protected static final String PASSWORD = null;
 	
 	public void send(Mail... mails) throws Exception {
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", SMPT_HOST);
 		
-		Session session = Session.getDefaultInstance(props);
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(USERNAME, PASSWORD);
+			}
+			
+		});
 		MimeMessage message = new MimeMessage(session);
 		
 		for(Mail mail : mails) {
