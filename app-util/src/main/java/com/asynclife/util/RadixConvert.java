@@ -7,7 +7,7 @@ import org.apache.commons.codec.binary.BinaryCodec;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-public class RadixConvert {
+public class Character2HexTest {
 	
 	@Test
 	public void test() {
