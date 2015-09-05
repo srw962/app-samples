@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Util {
+public class BinaryUtil {
 	/**
 	 * The hex string into byte array
 	 * 

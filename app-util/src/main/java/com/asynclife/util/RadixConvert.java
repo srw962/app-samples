@@ -7,7 +7,7 @@ import org.apache.commons.codec.binary.BinaryCodec;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-public class RadixConvert {
+public class Character2HexTest {
 	
 	@Test
 	public void test() {
@@ -50,4 +50,56 @@ public class RadixConvert {
 	    }
 	    return sb.toString();
 	}
+	
+
+	
+	private static final String ENCODEING = "GB18030";
+	
+	@Test
+	public void test() throws Exception {
+		// to hex
+		String text = "13696084456";
+		byte[] bytes = text.getBytes(ENCODEING);
+		String hexStr = BinaryUtil.bytesToHexString(bytes);
+		System.out.println(hexStr);
+		
+		// hex to source text
+		byte[] bytes2 = BinaryUtil.hexStringToByte(hexStr);
+		String text2 = new String(bytes2, ENCODEING);
+		System.out.println(text2);
+		
+	}
+	
+	/**
+	 * 字符串 <---> 16进制
+	 */
+	@Test
+	public void test02() throws Exception {
+		String text1 = "第1次,早期的鸟有虫吃，早起的虫被鸟吃，Thanks!1";
+		byte[] bytes1 = text1.getBytes(ENCODEING);
+		String hexStr = BinaryUtil.bytesToHexString(bytes1);
+		System.out.println("明文--->"+text1);
+		System.out.println("HEX --->"+hexStr);
+		
+		byte[] bytes2 = BinaryUtil.hexStringToByte(hexStr);
+		String text2 = new String(bytes2, ENCODEING);
+		System.out.println("还原--->"+text2);
+	}
+	
+	
+	/**
+	 * 整数 <---> 16进制 
+	 */
+	@Test
+	public void test03() {
+		int number = 15;
+		String hexStr = Integer.toHexString(number);
+		hexStr = StringUtils.leftPad(hexStr, 2, '0');
+		System.out.println("hexStr="+hexStr);
+
+		int value = Integer.parseInt(hexStr, 16);
+		System.out.println(value);
+	}
+	
+
 }
