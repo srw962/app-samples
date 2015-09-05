@@ -1,16 +1,14 @@
 package com.asynclife.util;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-import org.apache.commons.codec.binary.BinaryCodec;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 public class Character2HexTest {
 	
 	@Test
-	public void test() {
+	public void test11() {
 		String hexStr = "0x11";
 		Integer i = Integer.decode(hexStr);
 		String binStr = Integer.toBinaryString(i);
@@ -29,7 +27,7 @@ public class Character2HexTest {
 	}
 	
 	@Test
-	public void test02() throws Exception {
+	public void test022() throws Exception {
 		String s = "13696084456";
 		byte[] bytes = s.getBytes("GBK");
 		System.out.println(Arrays.toString(bytes));
