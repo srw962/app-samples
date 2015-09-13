@@ -1,8 +1,15 @@
 WebService最大的好处---异构平台的通用服务，与具体语言无关的网络服务。
 
 dtd
+	约束XML中可以出现的元素以及内容限定
+	
+schema - xsd - xjc-> java
+	约束XML中的元素，以及丰富的限定规则
+	可以通过xsd转换为对于的JAVA类
+	xjc -d F:\asynclife\source\app\app-webservice\target 
+	    -p com.xml.schema 
+	    F:\asynclife\source\app\app-webservice\src\main\java\com\asynclife\xml\schema\all\classroom.xsd
 
-schema - xsd - java
 
 xml - stax dom4j 
 
