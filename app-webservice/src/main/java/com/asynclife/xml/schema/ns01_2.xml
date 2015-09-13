@@ -2,12 +2,12 @@
 
 <!-- 
 	通过文件路径引入schema：
-	 xsi:noNamespaceSchemaLocation="demo01.xsd"
+	 xsi:noNamespaceSchemaLocation="ns01.xsd"
 -->
 
-<user xmlns="http://www.example.org/demo01"
+<user xmlns="http://www.example.org/ns01"
  		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:noNamespaceSchemaLocation="demo01.xsd">
+		xsi:noNamespaceSchemaLocation="ns01.xsd">
 	
 	<id>1</id>
 	<name>aa</name>
