@@ -5,6 +5,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
@@ -15,6 +16,7 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -53,7 +55,7 @@ public class FlatfileToDbJobConfiguration {
 	public Step step(){
 		return stepBuilders.get("step")
 				.<Account,Account>chunk(1)
-				.reader(reader())
+				.reader(reader(null))
 				.processor(processor())
 				.writer(writer())
 				.listener(logProcessListener())
@@ -61,7 +63,8 @@ public class FlatfileToDbJobConfiguration {
 	}
 	
 	@Bean
-	public FlatFileItemReader<Account> reader(){
+	@StepScope
+	public FlatFileItemReader<Account> reader(@Value("#{jobParameters[filepath]}") String file2Read){
 		FlatFileItemReader<Account> itemReader = new FlatFileItemReader<Account>();
 		itemReader.setLineMapper(lineMapper());
 		itemReader.setResource(new ClassPathResource("account/20150920_01.csv"));

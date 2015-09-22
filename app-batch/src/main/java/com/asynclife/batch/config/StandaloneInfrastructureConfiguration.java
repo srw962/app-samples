@@ -2,6 +2,7 @@ package com.asynclife.batch.config;
 
 import javax.sql.DataSource;
 
+import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
@@ -12,6 +13,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 public class StandaloneInfrastructureConfiguration implements InfrastructureConfiguration {
  
+	@Bean
+	public JobLauncherTestUtils forTest() {
+		return new JobLauncherTestUtils();
+	}
+	
 	@Bean
 	public DataSource dataSource(){
 		EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();

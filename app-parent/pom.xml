@@ -27,9 +27,11 @@
 	</distributionManagement>
 
 	<properties>
+		<!-- 指定sourceEncoding可解决MVN在CMD命令行（操作系统GBK编码）下输出UTF-8不支持字符的错误 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
 		<!-- Generic properties -->
 		<java.version>1.7</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring -->
@@ -444,8 +446,33 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
+		<pluginManagement>
+			 <plugins>
+			 	<!-- 打包项目的所有依赖包 -->
+			 	<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.5.1</version>
+					<executions>
+					  <execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/dependency-jars/
+							</outputDirectory>
+						</configuration>
+					  </execution>
+					</executions>
+				  </plugin>
+			 </plugins>
+		
+		</pluginManagement>
 	</build>
-
 
 
 </project>
