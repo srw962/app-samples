@@ -26,23 +26,24 @@
   <build>
   	<plugins>
   		<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>jaxb2-maven-plugin</artifactId>
-			<version>1.6</version>
-            <executions>
-                <execution>
-                    <id>xjc</id>
-                    <goals>
-                        <goal>xjc</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-                <packageName>com.mycompany.schemas</packageName>
-                <extension>true</extension>
-            </configuration>
-        </plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.6</version>
+	            <executions>
+	                <execution>
+	                    <id>xjc</id>
+	                    <goals>
+	                        <goal>xjc</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	            <configuration>
+	                <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+	                <packageName>com.abc.batchjob.vo</packageName>
+	                <outputDirectory>${basedir}/target/generated</outputDirectory>
+	                <extension>true</extension>
+	            </configuration>
+	        </plugin>
   	</plugins>
   </build>
 </project>
