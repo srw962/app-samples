@@ -8,6 +8,9 @@ import java.util.Date;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.util.StreamReaderDelegate;
 
 import org.junit.Test;
 
@@ -65,4 +68,44 @@ public class JAXBTest {
 		
 		System.out.println(xml);
 	}
+	
+	/**
+	 * 处理异常：
+	 * unexpected element (uri:"", local:"LoanAcctReq"). Expected elements are <{http://www.example.org/esb}LoanAcctReq>
+	 * 
+	 * 问题原因：
+	 * 	由XJC转换schema得到的Java类中有namespace声明，但是报文中没有namespace，在使用JAXB的Unmarshaller转换时就会报namespace不匹配的异常
+	 * 
+	 * 解决办法：
+	 * 	自定义CustomerXMLReaderWithNamespace继承StreamReaderDelegate，重写getNamespaceURI()，返回xsd中声明的namespace给Unmarshaller
+	 */
+	@Test
+	public void testNoNamespaceXML() throws Exception {
+		String response = "<?xml version=\"1.0\" encoding=\"GB18030\"?><LoanAcctReq><txCode>001</txCode><date>20151008</date><time>215845</time><name>张三</name><age>20</age></LoanAcctReq>";
+		
+		JAXBContext ctx = JAXBContext.newInstance(LoanAcctReq.class);
+		Unmarshaller unmarshaller = ctx.createUnmarshaller();
+		
+		StringReader reader = new StringReader(response);  
+		XMLStreamReader xsr = XMLInputFactory.newFactory().createXMLStreamReader(reader);
+		CustomerXMLReaderWithNamespace xr = new CustomerXMLReaderWithNamespace(xsr);
+		
+		Object o = unmarshaller.unmarshal(xr);
+		System.out.println(o);
+	}
+	
+}
+
+class CustomerXMLReaderWithNamespace extends StreamReaderDelegate {
+    public CustomerXMLReaderWithNamespace(XMLStreamReader reader) {
+      super(reader);
+    }
+    @Override
+    public String getAttributeNamespace(int arg0) {
+      return "";
+    }
+    @Override
+    public String getNamespaceURI() {
+      return "http://www.example.org/esb";
+    }
 }
