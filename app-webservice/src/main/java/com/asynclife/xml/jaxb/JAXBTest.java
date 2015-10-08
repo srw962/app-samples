@@ -8,11 +8,22 @@ import java.util.Date;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.util.StreamReaderDelegate;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
 import com.mycompany.schemas.LoanAcctReq;
 
@@ -92,6 +103,45 @@ public class JAXBTest {
 		
 		Object o = unmarshaller.unmarshal(xr);
 		System.out.println(o);
+	}
+	
+	/**
+	 * 通过给document根节点添加namespace
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testAddNamespaceToDom() throws Exception {
+		String response = "<?xml version=\"1.0\" encoding=\"GB18030\"?><LoanAcctReq><txCode>001</txCode><date>20151008</date><time>215845</time><name>张三</name><age>20</age></LoanAcctReq>";
+		
+		InputSource inputSource =  new InputSource(new StringReader(response));   
+		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		dbf.setNamespaceAware(false);
+		Document doc = dbf.newDocumentBuilder().parse(inputSource);     
+		
+		Element root = doc.getDocumentElement();
+		root.setAttribute("xmlns", "http://www.example.org/esb");
+		String xmlWithNamespace = transformXmlNodeToXmlString(root);
+		
+		System.out.println(xmlWithNamespace);
+		
+		JAXBContext ctx = JAXBContext.newInstance(LoanAcctReq.class);
+		Unmarshaller unmarshaller = ctx.createUnmarshaller();
+		
+		Object o = unmarshaller.unmarshal(new StringReader(xmlWithNamespace));
+		System.out.println(o);
+	}
+	
+	private static String transformXmlNodeToXmlString(Node node)
+	        throws TransformerException {
+	    TransformerFactory transFactory = TransformerFactory.newInstance();
+	    Transformer transformer = transFactory.newTransformer();
+	    StringWriter buffer = new StringWriter();
+	    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+	    transformer.transform(new DOMSource(node), new StreamResult(buffer));
+	    String xml = buffer.toString();
+	    return xml;
 	}
 	
 }
