@@ -53,7 +53,7 @@ public class MultiPortEcho
 
           // Add the new connection to the selector
           SelectionKey newKey = sc.register( selector, SelectionKey.OP_READ );
-          it.remove();
+          it.remove();// this event have been processed, so remove it!
 
           System.out.println( "Got connection from "+sc );
         } else if ((key.readyOps() & SelectionKey.OP_READ)
@@ -80,7 +80,7 @@ public class MultiPortEcho
 
           System.out.println( "Echoed "+bytesEchoed+" from "+sc );
 
-          it.remove();
+          it.remove(); // this event have been processed, so remove it!
         }
 
       }

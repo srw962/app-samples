@@ -10,6 +10,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class BinaryUtil {
+	
+	public static String getBits(byte inByte) {
+		// Go through each bit with a mask
+		StringBuilder builder = new StringBuilder();
+		for (int j = 0; j < 8; j++) {
+			// Shift each bit by 1 starting at zero shift
+			byte tmp = (byte) (inByte >> j);
+
+			// Check byte with mask 00000001 for LSB
+			int expect1 = tmp & 0x01;
+
+			builder.append(expect1);
+		}
+		return (builder.reverse().toString());
+	}
+	
+	public static String getBits2(byte inByte) {
+		// & 0xff 仅保留低8位
+		return Integer.toBinaryString(inByte & 0xff);
+	}
+
 	/**
 	 * The hex string into byte array
 	 * 
