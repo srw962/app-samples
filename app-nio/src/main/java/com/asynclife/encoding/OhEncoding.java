@@ -1,21 +1,14 @@
 package com.asynclife.encoding;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.CharBuffer;
-import java.nio.channels.FileChannel;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -30,6 +23,11 @@ import com.asynclife.util.FileUtil;
  * 	GB2312 GBK GB18030 中文编码表，1个中文字符用2个字节存储 ；
  * 	UNICODE(UTF-8,UTF-16...) 容纳世界上所有文字和符号的字符编码
  * 		UTF-8 英文字符用1个字节，中文字符用3个字节表示
+ * 
+ * 判断文件编码类型：
+ * 	中文 GBK编码 1个汉字2个字节
+ *  中文 UTF8编码 1个汉字3个字节
+ *  右键看文件大小便可判断文件的使用的编码类型
  */
 public class OhEncoding {
 
