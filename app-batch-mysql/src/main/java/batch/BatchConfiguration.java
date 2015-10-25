@@ -1,7 +1,5 @@
 package batch;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
@@ -13,34 +11,25 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JpaItemWriter;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import batch.model.Person;
 import batch.processor.PersonItemProcessor;
 import batch.tokenizer.PersonFixedLengthTokenizer;
 
 
-@Configuration
+@SpringBootApplication
 @EnableBatchProcessing
-@ComponentScan
-//spring boot configuration
-@EnableAutoConfiguration
-// file that contains the properties
 @PropertySource("classpath:application.properties")
 public class BatchConfiguration {
 
@@ -55,7 +44,6 @@ public class BatchConfiguration {
     private String databaseUsername;
     @Value("${database.password}")
     private String databasePassword;
-
 
     /**
      * We define a bean that read each line of the input file.
@@ -98,12 +86,14 @@ public class BatchConfiguration {
      * @return
      */
     @Bean
-    public ItemWriter<Person> writer() {
-        JpaItemWriter writer = new JpaItemWriter<Person>();
-        writer.setEntityManagerFactory(entityManagerFactory().getObject());
-
+    public ItemWriter<Person> writer(DataSource dataSource) {
+    	JdbcBatchItemWriter<Person> writer = new JdbcBatchItemWriter<Person>();
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Person>());
+        writer.setSql("INSERT INTO person (first_name, family_name, year) VALUES (:firstName, :familyName, :year)");
+        writer.setDataSource(dataSource);
         return writer;
     }
+    
 
     /**
      * This method declare the steps that the batch has to follow
@@ -115,7 +105,7 @@ public class BatchConfiguration {
     @Bean
     public Job importPerson(JobBuilderFactory jobs, Step s1) {
 
-        return jobs.get("import")
+        return jobs.get("importPerson")
                 .incrementer(new RunIdIncrementer()) // because a spring config bug, this incrementer is not really useful
                 .flow(s1)
                 .end()
@@ -138,7 +128,7 @@ public class BatchConfiguration {
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<Person> reader,
                       ItemWriter<Person> writer, ItemProcessor<Person, Person> processor) {
         return stepBuilderFactory.get("step1")
-                .<Person, Person>chunk(1000)
+                .<Person, Person>chunk(1)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
@@ -160,29 +150,10 @@ public class BatchConfiguration {
         dataSource.setPassword(databasePassword);
         return dataSource;
     }
-
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
-        LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
-        lef.setPackagesToScan("batch");
-        lef.setDataSource(dataSource());
-        lef.setJpaVendorAdapter(jpaVendorAdapter());
-        lef.setJpaProperties(new Properties());
-        return lef;
-    }
-
-
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.MYSQL);
-        jpaVendorAdapter.setGenerateDdl(true);
-        jpaVendorAdapter.setShowSql(false);
-
-        jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
-        return jpaVendorAdapter;
-    }
+    
+//    @Bean
+//    public PlatformTransactionManager transactionManager(){
+//        return new DataSourceTransactionManager(dataSource());
+//    }
 
 }
