@@ -28,6 +28,11 @@ cursor based reading
 6. how to use skip and retry functionality?
 	
 7. how to use listener for monitor job/step execution status?	
+
+8. 关闭JOB在application启动后自动执行
+#prevent auto running jobs when application start.
+#Or you can use spring.batch.job.names, it takes a comma-delimited list of job names that will be run.
+spring.batch.job.enabled=false
 	
 	
 https://blog.codecentric.de/en/2012/03/transactions-in-spring-batch-part-1-the-basics/
