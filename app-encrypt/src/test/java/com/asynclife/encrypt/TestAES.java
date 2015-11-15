@@ -10,15 +10,15 @@ public class TestAES {
 		
 		sop("加密前："+text);
 
-		byte[] keyBytes = MyEncrypt.genMyAESKey(128, "my simple seed for aes".getBytes());
+		byte[] keyBytes = SymmetryCrypt.genMyAESKey(128, "my simple seed for aes".getBytes());
 		
 		byte[] srcBytes = text.getBytes("UTF-8");
-		byte[] encodedBytes = MyEncrypt.encryptAES(MyEncrypt.KEY_AES, keyBytes, srcBytes);
-		String hexStr = MyEncrypt.encodeHexString(encodedBytes);
+		byte[] encodedBytes = SymmetryCrypt.encryptAES(SymmetryCrypt.KEY_AES, keyBytes, srcBytes);
+		String hexStr = CommonUtil.encodeHexString(encodedBytes);
 		sop("加密后的字符串："+hexStr);
 		
-		byte[] hex2Bytes = MyEncrypt.decodeHexString(hexStr.toCharArray());
-		byte[] decodedBytes = MyEncrypt.decryptAES(MyEncrypt.KEY_AES, keyBytes, hex2Bytes);
+		byte[] hex2Bytes = CommonUtil.decodeHexString(hexStr.toCharArray());
+		byte[] decodedBytes = SymmetryCrypt.decryptAES(SymmetryCrypt.KEY_AES, keyBytes, hex2Bytes);
 		String decodeStr = new String(decodedBytes, "UTF-8");
 		sop("解密后："+decodeStr);
 		//3516587e767912edcb20f08a2d85a199

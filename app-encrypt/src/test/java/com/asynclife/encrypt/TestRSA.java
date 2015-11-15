@@ -13,10 +13,10 @@ public class TestRSA {
 	@BeforeClass
 	public static void initKeyPair() {
 		
-		Map<String, Object> keyPairMap = MyEncrypt.genKeyPair();
+		Map<String, Object> keyPairMap = RSA.genKeyPair();
 		
-		publicKey = MyEncrypt.getPublicKey(keyPairMap);
-		privateKey = MyEncrypt.getPrivateKey(keyPairMap);
+		publicKey = RSA.getPublicKey(keyPairMap);
+		privateKey = RSA.getPrivateKey(keyPairMap);
 		
 		System.out.println("公钥:\n"+publicKey);
 		System.out.println("私钥:\n"+privateKey);
@@ -27,8 +27,8 @@ public class TestRSA {
 	public void testEncodeByPublicKey() {
 		String text = "公钥加密--->私钥解密";
 		
-		byte[] encrypted = MyEncrypt.encryptByPublicKey(publicKey, text.getBytes());
-		byte[] decrypted = MyEncrypt.decryptByPrivateKey(privateKey, encrypted);
+		byte[] encrypted = RSA.encryptByPublicKey(publicKey, text.getBytes());
+		byte[] decrypted = RSA.decryptByPrivateKey(privateKey, encrypted);
 		
 		String output = new String(decrypted);
 		
@@ -41,8 +41,8 @@ public class TestRSA {
 	public void testEncodeByPrivateKey() {
 		String text = "私钥加密--->公钥解密";
 		
-		byte[] encrypted = MyEncrypt.encryptByPrivateKey(privateKey, text.getBytes());
-		byte[] decrypted = MyEncrypt.decryptByPublicKey(publicKey, encrypted);
+		byte[] encrypted = RSA.encryptByPrivateKey(privateKey, text.getBytes());
+		byte[] decrypted = RSA.decryptByPublicKey(publicKey, encrypted);
 		
 		String output = new String(decrypted);
 		
@@ -53,11 +53,11 @@ public class TestRSA {
 		System.err.println("【私钥签名——公钥验证签名】");
 		
 		// 传入密文、私钥，得到签名
-		String base64Sign = MyEncrypt.sign(encrypted, privateKey);
+		String base64Sign = RSA.sign(encrypted, privateKey);
 		System.out.println(base64Sign);
 		
 		// 传入密文、签名、公钥，验证签名
-		boolean result = MyEncrypt.verify(encrypted, base64Sign, publicKey);
+		boolean result = RSA.verify(encrypted, base64Sign, publicKey);
 		System.err.println("是否一致："+result);
 		
 	}

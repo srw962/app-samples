@@ -11,8 +11,8 @@ public class TestBase64 {
 	@Test
 	public void test() {
 		String srcText = "abcd";
-		String base64Str = new String(MyEncrypt.encodeBase64(srcText.getBytes()));// YWJjZA==
-		String decryptStr = new String(MyEncrypt.decodeBase64(base64Str)); // abcd
+		String base64Str = new String(Base64Util.encodeBase64(srcText.getBytes()));// YWJjZA==
+		String decryptStr = new String(Base64Util.decodeBase64(base64Str)); // abcd
 		Assert.assertEquals(srcText, decryptStr);
 	}
 	
@@ -23,8 +23,8 @@ public class TestBase64 {
 	@Test
 	public void testAdditional() {
 		String srcText = "d";
-		String base64Str = new String(MyEncrypt.encodeBase64(srcText.getBytes())); // ZA==
-		String decryptStr = new String(MyEncrypt.decodeBase64(base64Str));
+		String base64Str = new String(Base64Util.encodeBase64(srcText.getBytes())); // ZA==
+		String decryptStr = new String(Base64Util.decodeBase64(base64Str));
 		Assert.assertTrue(srcText.equals(decryptStr));
 	}
 	

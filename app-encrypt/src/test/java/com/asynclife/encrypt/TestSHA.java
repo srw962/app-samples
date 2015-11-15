@@ -12,15 +12,15 @@ public class TestSHA {
 	public void test() throws Exception {
 		String text = "一段文字";
 		
-		String str1 = MyEncrypt.encryptSHA256(text);
-		String str2 = MyEncrypt.getSHA256(text);
+		String str1 = HashAlgorithm.encryptSHA256(text);
+		String str2 = HashAlgorithm.getSHA256(text);
 		
 		Assert.assertEquals(str1, str2);
 		
 		System.out.println(str1);
 		System.out.println(str2);
 		
-		String str3 = MyEncrypt.getSHA512(text);
+		String str3 = HashAlgorithm.getSHA512(text);
 		System.out.println(str2.length());
 		System.out.println(str3.length());
 	}
