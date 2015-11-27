@@ -39,7 +39,7 @@ public class ProductListController {
         final List<Product> allProducts = productService.findAll(); 
         
         mav.addObject("prods", allProducts);
-        mav.setViewName("product/list");
+        mav.setViewName("gtvg/product/list");
         
         return mav;
         

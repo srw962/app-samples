@@ -18,7 +18,7 @@ public class HomeController {
 	String home(Model model, HttpSession session) {
 		session.setAttribute("user", new User("John", "Apricot", "Antarctica", null));
 		model.addAttribute("today", Calendar.getInstance());
-		return "home";
+		return "gtvg/home";
 	}
 	
 }

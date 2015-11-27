@@ -9,7 +9,7 @@ public class SubscribeController {
 
 	@RequestMapping("/subscribe")
     public String process() {
-       return "subscribe";
+       return "gtvg/subscribe";
     }
 
 }

@@ -9,7 +9,7 @@ public class UserProfileController {
 
 	@RequestMapping("userprofile")
 	public String process() {
-       return "userprofile";
+       return "gtvg/userprofile";
     }
 
 }

@@ -21,7 +21,7 @@ public class ProductCommentsController {
         final Product product = productService.findById(prodId);
         
         mav.addObject("prod", product);
-        mav.setViewName("product/comments");
+        mav.setViewName("gtvg/product/comments");
         
         return mav;
     }

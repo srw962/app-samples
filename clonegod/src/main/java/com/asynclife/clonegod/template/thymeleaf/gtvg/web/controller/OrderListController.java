@@ -20,7 +20,7 @@ public class OrderListController {
         final List<Order> allOrders = orderService.findAll(); 
         
         mav.addObject("orders", allOrders);
-        mav.setViewName("order/list");
+        mav.setViewName("gtvg/order/list");
         
         return mav;
     }

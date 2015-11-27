@@ -22,7 +22,7 @@ public class OrderDetailsController {
         final Order order = orderService.findById(orderId);
         
         mav.addObject("order", order);
-        mav.setViewName("order/details");
+        mav.setViewName("gtvg/order/details");
         
         return mav;
         
