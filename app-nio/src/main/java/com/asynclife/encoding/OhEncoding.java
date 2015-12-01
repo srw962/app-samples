@@ -9,11 +9,11 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
 import com.asynclife.util.BinaryUtil;
 import com.asynclife.util.FileUtil;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 /**
  * 计算机只能识别二进制，如 10010001 8bit=1byte 多个字节需要用字节数组来存储-byte[]
  * 为了将字符转换为计算机可识别的二进制，因此需要为每个字符分配对应的二进制，由此产生了编码表

@@ -9,7 +9,6 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +17,7 @@ public class NIOClient {
 
 	static int closed = 0;
 	
-	static int wokerCount = 100;
+	static int wokerCount = 1;
 	static InetSocketAddress remote = new InetSocketAddress("localhost", 12345);;
 	static CharsetEncoder encoder = Charset.forName("GB2312").newEncoder();;
 
@@ -76,7 +75,7 @@ public class NIOClient {
 				SocketChannel channel = (SocketChannel) key.channel();
 				if (channel.isConnectionPending()) {
 					channel.finishConnect();
-					channel.write(encoder.encode(CharBuffer.wrap("Hello from "
+					channel.write(encoder.encode(CharBuffer.wrap("Client Worker No: "
 							+ this.wokerNo)));
 					channel.register(key.selector(), SelectionKey.OP_READ);
 				}
@@ -96,7 +95,7 @@ public class NIOClient {
 
 	public static void main(String[] args) {
 		ExecutorService exec = Executors.newFixedThreadPool(wokerCount);
-		for (int i = 0; i < wokerCount; i++) {
+		for (int i = 1; i <= wokerCount; i++) {
 			exec.execute(new Worker(i));
 		}
 		exec.shutdown();

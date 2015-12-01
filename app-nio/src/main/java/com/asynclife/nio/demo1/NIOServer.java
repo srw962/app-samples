@@ -1,6 +1,5 @@
 package com.asynclife.nio.demo1;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -42,6 +41,7 @@ public class NIOServer {
 				byteBuffer.flip();
 			} catch (IOException e) {
 				e.printStackTrace();
+				return null;
 			}
 			
 			ByteBuffer readOnlyBuffer = byteBuffer.asReadOnlyBuffer();
@@ -90,7 +90,10 @@ public class NIOServer {
 	public void listen() {
 		try {
 			for (;;) {
-				selector.select(); // 选择已就绪的通道
+				int n = selector.select(); // 选择已就绪的通道
+				if(n == 0) {
+					continue;
+				}
 				
 				Iterator<SelectionKey> iter = selector.selectedKeys()
 						.iterator();
@@ -118,13 +121,14 @@ public class NIOServer {
 			clientBuffer.clear();
 			int count = sc.read(clientBuffer);
 			if (count <= 0) {
+				System.out.println("Read data from channel is less than 0, close channel " + sc.hashCode());
 				sc.close(); // >>>??? 
 				return;
 			}
 			clientBuffer.flip();
 			CharBuffer charBuf = decoder.decode(clientBuffer);
 			
-			System.out.println("Client >>" + charBuf.toString());
+			System.out.println("Read data from channel"+sc.hashCode()+" >>" + charBuf.toString());
 			
 			SelectionKey wKey = sc.register(selector,
 					SelectionKey.OP_WRITE);
@@ -137,7 +141,9 @@ public class NIOServer {
 			if (block != null) {
 				socketChannel.write(block);
 			} else {
+				System.out.println("关闭FileChannel");
 				handle.close();
+				System.out.println("关闭socketChannel:"+socketChannel.hashCode());
 				socketChannel.close();
 			}
 			
@@ -148,6 +154,7 @@ public class NIOServer {
 		int port = 12345;
 		NIOServer server = new NIOServer(port);
 		while(true) {
+			System.out.println("[Server start listening]");
 			server.listen();
 		}
 		
