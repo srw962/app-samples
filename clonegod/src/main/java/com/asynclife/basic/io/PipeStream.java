@@ -43,7 +43,5 @@ public class PipeStream {
             }
         }).start();
 
-        Thread.sleep(1000);
-
     }
 }
