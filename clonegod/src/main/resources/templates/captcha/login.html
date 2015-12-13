@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
@@ -29,7 +30,7 @@ td {
 			</tr>
 			<tr>
 				<td valign="middle">Enter these letters:<br /> 
-					<img id="captchaImg" src="/captcha.jpg" alt="Enter the characters appearing in this image" border="1"
+					<img id="captchaImg" src="/captcha.jpg" alt="Enter the characters appearing in this image"
 					onclick="this.src='/captcha.jpg?t='+Math.random()"/>
 				</td>
 				<td><input type="text" name="captchaChars" /></td>
