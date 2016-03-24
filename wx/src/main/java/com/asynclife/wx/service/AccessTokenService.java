@@ -46,15 +46,17 @@ public class AccessTokenService {
 	public String getAccessToken() {
 		String token = redisTemplate.opsForValue().get(AppConfig.KEY_WX_ACCESS_TOKEN);
 		if(token == null) {
-			AccessToken newToken = getAccessTokenFromWXServer();
+			AccessToken newToken = refreshAccessTokenFromWXServer();
 			token = newToken.getAccess_token();
-			redisTemplate.opsForValue().set(AppConfig.KEY_WX_ACCESS_TOKEN, token, newToken.getExpires_in() - 20, TimeUnit.SECONDS);
+			// expires_in 	凭证有效时间，单位：秒
+			redisTemplate.opsForValue().set(AppConfig.KEY_WX_ACCESS_TOKEN, token, 
+					newToken.getExpires_in() - 20, TimeUnit.SECONDS);
 			logger.info("refresh token success");
 		}
 		return token;
 	}
 	
-	private AccessToken getAccessTokenFromWXServer() {
+	private AccessToken refreshAccessTokenFromWXServer() {
 		String retStr = restTemplate.getForObject(accessTokenURL, String.class, APPID, APPSECRET);
 		logger.info("wx server return:{}", retStr);
 		AccessToken wx = gson.fromJson(retStr, AccessToken.class);

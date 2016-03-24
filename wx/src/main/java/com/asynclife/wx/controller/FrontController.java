@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.asynclife.wx.config.AppConfig;
-import com.asynclife.wx.dispatcher.Dispatcher;
-import com.asynclife.wx.service.VerifyRemoteServer;
+import com.asynclife.wx.exception.InvalidSignatureException;
+import com.asynclife.wx.hanlder.Dispatcher;
+import com.asynclife.wx.service.SignatureCheckService;
 
 @Controller
 public class FrontController {
@@ -25,7 +26,7 @@ public class FrontController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	VerifyRemoteServer verifyRemoteServer;
+	SignatureCheckService scService;
 	
 	@Autowired
 	Dispatcher dispatcher;
@@ -37,10 +38,17 @@ public class FrontController {
 	 */
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	@ResponseBody
-	public String verifyRemoteServer(HttpServletRequest req) {
+	public String checkSign(HttpServletRequest req) {
 		
-		return verifyRemoteServer.verify((HttpServletRequest)req);
+		String result = null;
 		
+		try {
+			result = scService.checkSign((HttpServletRequest)req);
+		} catch (InvalidSignatureException e) {
+			result = "error";
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -61,7 +69,7 @@ public class FrontController {
 		}
 		
 		String reqXml = buf.toString();
-		logger.info(reqXml);
+		logger.debug(reqXml);
 		
 		return dispatcher.dispach(reqXml);
 		
