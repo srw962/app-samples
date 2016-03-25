@@ -14,5 +14,9 @@ public class JsonUtils {
 		return GSON.fromJson(jsonStr, cls);
 	}
 	
+	public static String toJson(Object src) {
+		return GSON.toJson(src);
+	}
+	
 	
 }

@@ -33,6 +33,8 @@ public class EventHandler implements Handler {
 				return eventService.onClick(msgReq);
 			case VIEW:
 				return eventService.onView(msgReq);
+			case TEMPLATESENDJOBFINISH:
+				return eventService.onTemplateSendJobFinish(msgReq);
 			default:
 				logger.warn("unknown event type:{}", msgReq.getEvent());
 		}

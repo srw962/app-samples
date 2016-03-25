@@ -9,14 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.asynclife.wx.config.AppConfig;
 import com.asynclife.wx.util.HttpClient;
 
 @Service
-//@PropertySource("classpath:api.properties")
 public class MenuService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -49,7 +47,9 @@ public class MenuService {
 			IOUtils.closeQuietly(ins);
 		}
 		logger.debug("create menu: json str={}", menuJsonStr);
+		
 		String ret = httpClient.doPost(POST_CREATE_MENU, menuJsonStr);
+		
 		logger.debug("create menu: return={}", ret);
 		
 	}

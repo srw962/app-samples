@@ -57,14 +57,22 @@ public class EventService {
 		EventKey evtKey = EventKey.valueOf(msgReq.getEventKey());
 		String keyName = evtKey.getKeyName();
 		
-		logger.info("Event-CLICK! user={}, keyName={}", msgReq.getFromUserName(), keyName);
+		logger.debug("Event-CLICK! user={}, keyName={}", msgReq.getFromUserName(), keyName);
 		
 		return CommonService.simpleText(msgReq, "你点击了"+keyName);
 	}
 
 	public String onView(MsgReq msgReq) {
 		String url = msgReq.getEventKey();
-		logger.info("Event-VIEW! user={}, url={}", msgReq.getFromUserName(), url);
+		logger.debug("Event-VIEW! user={}, url={}", msgReq.getFromUserName(), url);
+		
+		return null;
+	}
+
+	public String onTemplateSendJobFinish(MsgReq msgReq) {
+		
+		logger.debug("Event-TEMPLATESENDJOBFINISH! user={}, msgID={}, status={}",
+				msgReq.getFromUserName(), msgReq.getMsgID(), msgReq.getStatus());
 		
 		return null;
 	}

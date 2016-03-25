@@ -11,6 +11,7 @@ public class MsgReq extends MsgBase {
 	private String Content;
 	
 	private String MsgId;
+	private String MsgID;
 	
 	private String PicUrl;
 	
@@ -48,6 +49,7 @@ public class MsgReq extends MsgBase {
 	
 	private String Precision;
 	
+	private String Status;
 
 	public String getContent() {
 		return Content;
@@ -55,6 +57,10 @@ public class MsgReq extends MsgBase {
 
 	public String getMsgId() {
 		return MsgId;
+	}
+
+	public String getMsgID() {
+		return MsgID;
 	}
 
 	public String getPicUrl() {
@@ -128,5 +134,9 @@ public class MsgReq extends MsgBase {
 	public String getPrecision() {
 		return Precision;
 	}
-	
+
+	public String getStatus() {
+		return Status;
+	}
+
 }

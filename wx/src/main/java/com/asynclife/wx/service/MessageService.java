@@ -31,6 +31,10 @@ public class MessageService {
 		
 		logger.info(str);
 		
+		if(str.contains("A4")) {
+			return CommonService.simpleArticle(msgReq);
+		}
+		
 		return CommonService.simpleText(msgReq, str);
 	}
 
