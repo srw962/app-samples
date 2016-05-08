@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.asynclife.wx.service.AccessTokenService;
 
-@Component
+//@Component
 public class HttpClient {
 
 	private final Map<String, String> urlVariableMap = new ConcurrentHashMap<String, String>();

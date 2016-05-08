@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.asynclife.wx.hanlder.Handler;
 
-@Component
+//@Component
 public class Dispatcher {
 	
 	@Autowired

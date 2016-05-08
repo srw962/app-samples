@@ -34,12 +34,12 @@
 	            }]
 	       },
 	       {
-	           "name":"关于我们",
+	           "name":"微信分享",
 	           "sub_button":[
 	           {	
 	               "type":"view",
-	               "name":"官方网站",
-	               "url":"http://www.chinapoluo.com/"
+	               "name":"我的首页",
+	               "url":"http://clonegod.ngrok.cc/wx/index"
 	            },
 	            {
 	               "type":"click",
