@@ -15,7 +15,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.asynclife.wx.domain.MaterialRepository;
 import com.asynclife.wx.enums.MediaType;
-import com.asynclife.wx.util.HttpClient;
+import com.asynclife.wx.net.HttpClient;
 
 @Service
 public class MaterialSevice {

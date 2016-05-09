@@ -43,7 +43,7 @@ public class SecurityFilter implements Filter, ApplicationContextAware{
 			//return;
 		} else {
 			printRequestParams(httpReq);
-			scService.checkSign(httpReq);
+			// scService.checkSign(httpReq);
 		}
 		
 		chain.doFilter(req, rsp);

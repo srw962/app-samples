@@ -5,11 +5,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.asynclife.wx.service.AccessTokenService;
 
-//@Component
+@Component
 public class HttpClient {
 
 	private final Map<String, String> urlVariableMap = new ConcurrentHashMap<String, String>();
@@ -22,7 +23,7 @@ public class HttpClient {
 	
 	
 	public String doGet(String url) {
-		return restTemplate.getForObject(url, String.class, urlVariablesAll(null));
+		return doGet(url, null);
 	}
 	
 	public String doGet(String url, Map<String, String> urlVariables) {
@@ -30,13 +31,26 @@ public class HttpClient {
 	}
 	
 	public String doPost(String url, String body) {
-		return restTemplate.postForObject(url, body, String.class, urlVariablesAll(null));
+		return doPost(url, body, null);
 	}
 	
 	public String doPost(String url, String body, Map<String, String> urlVariables) {
 		return restTemplate.postForObject(url, body, String.class, urlVariablesAll(urlVariables));
 	}
 	
+	public String doPost(String url, MultiValueMap<String, Object> body) {
+		return doPost(url, body, null);
+	}
+	
+	public String doPost(String url, MultiValueMap<String, Object> body, Map<String, String> urlVariables) {
+		return restTemplate.postForObject(url, body, String.class, urlVariablesAll(urlVariables));
+	}
+	
+	/**
+	 * 自动绑定参数值到AccessToken
+	 * @param urlVariables
+	 * @return
+	 */
 	public  Map<String, String> urlVariablesAll(Map<String, String> urlVariables) {
 		if(urlVariables != null) {
 			urlVariableMap.putAll(urlVariables);
@@ -44,6 +58,8 @@ public class HttpClient {
 		urlVariableMap.put("ACCESS_TOKEN", accessTokenService.getAccessToken());
 		return urlVariableMap;
 	}
+
+	
 	
 	
 }

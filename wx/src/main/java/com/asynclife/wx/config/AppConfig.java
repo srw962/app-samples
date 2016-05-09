@@ -8,4 +8,6 @@ public class AppConfig {
 	
 	public static final String KEY_WX_ACCESS_TOKEN = "WX_ACCESS_TOKEN";
 	
+	public static final String KEY_WX_JSAPI_TICKET = "WX_JSAPI_TICKET";
+	
 }

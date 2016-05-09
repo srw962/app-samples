@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.asynclife.wx.enums.MsgType;
 import com.asynclife.wx.model.MsgReq;
 import com.asynclife.wx.model.MsgRsp;
-import com.asynclife.wx.util.HttpClient;
+import com.asynclife.wx.net.HttpClient;
 import com.asynclife.wx.util.JaxbHelper;
 
 /**
