@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.asynclife.wx.enums.MsgType;
 import com.asynclife.wx.model.MsgReq;
-import com.asynclife.wx.util.JaxbHelper;
+import com.asynclife.wx.util.xml.JaxbHelper;
 
 @Component
 public class Dispatcher {

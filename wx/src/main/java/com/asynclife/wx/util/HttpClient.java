@@ -1,4 +1,4 @@
-package com.asynclife.wx.net;
+package com.asynclife.wx.util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

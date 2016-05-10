@@ -1,37 +1,39 @@
-package com.asynclife.wx.util;
+package com.asynclife.wx.util.xml;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.Writer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
+import com.asynclife.wx.model.MsgReq;
 
 public class JaxbHelper {
 	
 	public static String toXml(Object source, Class<?> cls) {
+		return toXml(source, cls, true);
+	}
+	
+	public static String toXml(Object source, Class<?> cls, boolean prettyPrint) {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(cls);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.setProperty(CharacterEscapeHandler.class.getName(),
-	                new CharacterEscapeHandler() {
-	                    @Override
-	                    public void escape(char[] ac, int i, int j, boolean flag,
-	                            Writer writer) throws IOException {
-	                        writer.write(ac, i, j);
-	                    }
-	                });
-			StringWriter sw = new StringWriter();
-			marshaller.marshal(source, sw);
-			return sw.toString();
+			 if( prettyPrint ) { 
+	            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	        }
+			 
+			StringWriter stringWriter = new StringWriter();
+			
+			marshaller.marshal(source, stringWriter);
+			
+			String output = stringWriter.toString().replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+			
+			return output;
+			
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		}
@@ -52,5 +54,15 @@ public class JaxbHelper {
 			e.printStackTrace();
 		}
 		return t;
+	}
+	
+	public static void main(String[] args) {
+		
+		MsgReq req = new MsgReq();
+		req.setFromUserName("test");
+		req.setCreateTime(""+System.currentTimeMillis()/1000);
+		
+		System.out.println(toXml(req, req.getClass(), true));
+		
 	}
 }

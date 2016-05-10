@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.asynclife.wx.util.AdapterXmlCDATA;
+import com.asynclife.wx.util.xml.AdapterXmlCDATA;
 
 @XmlRootElement(name="xml")
 @XmlAccessorType(XmlAccessType.FIELD)

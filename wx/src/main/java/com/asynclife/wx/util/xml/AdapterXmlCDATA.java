@@ -1,4 +1,4 @@
-package com.asynclife.wx.util;
+package com.asynclife.wx.util.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

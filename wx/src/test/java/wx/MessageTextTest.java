@@ -18,7 +18,7 @@ import com.asynclife.wx.model.MsgRsp;
 import com.asynclife.wx.model.TemplateMsg;
 import com.asynclife.wx.service.MessageService;
 import com.asynclife.wx.service.TemplateService;
-import com.asynclife.wx.util.JaxbHelper;
+import com.asynclife.wx.util.xml.JaxbHelper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)

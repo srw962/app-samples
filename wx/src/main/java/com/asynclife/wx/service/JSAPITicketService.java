@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.asynclife.wx.config.AppConfig;
 import com.asynclife.wx.model.JsApiTicket;
-import com.asynclife.wx.net.HttpClient;
+import com.asynclife.wx.util.HttpClient;
 import com.google.gson.Gson;
 
 @Service

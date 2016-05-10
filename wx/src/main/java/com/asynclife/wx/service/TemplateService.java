@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.asynclife.wx.model.TemplateMsg;
-import com.asynclife.wx.net.HttpClient;
+import com.asynclife.wx.util.HttpClient;
 import com.asynclife.wx.util.JsonUtils;
 
 @Service

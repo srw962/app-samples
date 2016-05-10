@@ -3,7 +3,7 @@ package com.asynclife.wx.service;
 import com.asynclife.wx.enums.MsgType;
 import com.asynclife.wx.model.MsgReq;
 import com.asynclife.wx.model.MsgRsp;
-import com.asynclife.wx.util.JaxbHelper;
+import com.asynclife.wx.util.xml.JaxbHelper;
 
 public class CommonService {
 	
