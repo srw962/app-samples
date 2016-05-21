@@ -45,7 +45,7 @@ public class AccessTokenService {
 	 */
 	public String getAccessToken() {
 		String token = redisTemplate.opsForValue().get(AppConfig.KEY_WX_ACCESS_TOKEN);
-		if(token == null) {
+		if(token == null || true) {
 			AccessToken newToken = refreshAccessTokenFromWXServer();
 			token = newToken.getAccess_token();
 			// expires_in 	凭证有效时间，单位：秒
